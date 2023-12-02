@@ -1,0 +1,48 @@
+import time
+import math
+
+# Function for inverse kinematics
+def inverse_kinematics(x, y):
+    # My inverse kinematics calculations here
+  
+
+    # Assuming calculated alpha and beta are in radians
+    alpha_degrees = math.degrees(alpha)
+    beta_degrees = math.degrees(beta)
+
+    return alpha_degrees, beta_degrees
+
+# Function to compensate angles using calibration errors
+def send_compensated(desired, errors):
+    # Get errors for the desired angle
+    shoulder, elbow = errors.get(desired, (0, 0))
+
+    # Sending adjusted angles to servos
+    adjusted_shoulder = desired + shoulder
+    adjusted_elbow = desired + elbow
+
+    print(f'Sending angles - Shoulder: {adjusted_shoulder}, Elbow: {adjusted_elbow}')
+
+    return adjusted_shoulder, adjusted_elbow
+
+# Main program
+if __name__ == "__main__":
+    # Test jig ID
+    jig_id = "X"
+
+    # Calibration simulation EXAMPLE
+    calibration_errors = {0: (1, 2), 30: (3, 4), 60: (2, 1), 90: (0, 0), 120: (-1, -2), 150: (-3, -4), 180: (-2, -1)}
+
+    # Print and plot shape before calibration
+    print("Shape before calibration:")
+    for angle in range(0, 181, 30):
+        # Use inverse kinematics to calculate alpha and beta
+        alpha, beta = inverse_kinematics(x, y)  
+        send_compensated(angle, calibration_errors)
+
+    # Print and plot shape after calibration
+    print("\nShape after calibration:")
+    for angle in range(0, 181, 30):
+        # Use inverse kinematics to calculate alpha and beta
+        alpha, beta = inverse_kinematics(x, y)  
+        send_compensated(angle, calibration_errors)
